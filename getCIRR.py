@@ -29,14 +29,12 @@ pdfFileObj = open('cirrs.pdf', 'rb')
 pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
 pageObj = pdfReader.getPage(0)
 texto = pageObj.extractText()
-print(texto)
+
 texto_diferente = texto.split()
-informacion_util = []
-informacion_util.append(texto_diferente[2])
-print(informacion_util)
-''''
+informacion_util = [texto_diferente[2]]
+
+
 print('CIRR van desde:', texto_diferente[2], "Hasta: ", texto_diferente[4])
 print('ACTUAL CIRR DOLAR: REPAYMENT PERIOD >8.5yrs: ', texto_diferente[64])
 print('ACTUAL CIRR EURO: REPAYMENT PERIOD > 8.5yrs: ', texto_diferente[70])
 print('Los anteriores fueron desde: ', texto_diferente[3], 'hasta: ', texto_diferente[5])
-'''
