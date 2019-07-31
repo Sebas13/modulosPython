@@ -1,8 +1,10 @@
 from selenium import webdriver
 from time import sleep
+from openpyxl import *
 import logging
 
 #Codigo para logging
+#TO-DO Create excel to dump all the data
 
 logging.basicConfig(level=logging.CRITICAL, format = ' %(message)s')
 
@@ -33,29 +35,30 @@ def create_url(day, month, year):
     url2 = url + str(year) + month + day
     return url2
 
+def obtain_titles(list_of_urls):
+    driver = webdriver.Chrome()
+    for i in range(0, len(list_of_urls)):
+        dia = list_of_urls[i][-2:]
+        mes = list_of_urls[i][-5: -3]
+        ano = list_of_urls[i][-10: -6]
+
+        driver.get(list_of_urls[i])
+
+        lista_titulares = driver.find_elements_by_class_name('noticia')
+        print('\n\n' + " [+] Los titulares del día " + str(dia) + " de " + str(mes) + " de " + str(ano) + '\n\n')
+
+        for j in range(0, len(lista_titulares)):
+            titular = lista_titulares[j].text
+            logging.critical(' [!] ' + titular)
+
+        lista_titulares.clear()
+        # sleep(2)
+
+    driver.close()
+
 for i in range(2):
     listaweb.append(create_url(i,month[8], year[2])) #Primeros dos dias de Septiembre de 2018
 
-
-driver = webdriver.Chrome()
-
-for i in range(0, len(listaweb)):
-
-    dia = listaweb[i][-2:]
-    mes = listaweb[i][-5 : -3]
-    ano = listaweb[i][-10 : -6]
-
-    driver.get(listaweb[i])
-    lista_titulares = driver.find_elements_by_class_name('noticia')
-    print('\n\n' + " [+] Los titulares del día " + str(dia) + " de " + str(mes) + " de " + str(ano) + '\n\n')
-
-    for j in range(0, len(lista_titulares)):
-        titular = lista_titulares[j].text
-        logging.critical(' [!] ' + titular)
-
-    lista_titulares.clear()
-    sleep(2)
-
-driver.close()
+obtain_titles(listaweb)
 
 logging.CRITICAL(' ---- End of the program ---- ')

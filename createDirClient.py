@@ -12,11 +12,26 @@ args = parser.parse_args()
 
 name = args.name
 
-#Create /ClientName
-os.makedirs(cwd + '\\' + name)
 
-#Create /ClientName/Constantes Vitales
-os.makedirs(cwd + '\\' + name + '\\' + 'Constantes Vitales')
-os.makedirs(cwd + '\\' + name + '\\' + 'Historial Clinico')
-os.makedirs(cwd + '\\' + name + '\\' + 'Notas de las sesiones')
+def crear_directorios(name):
+    '''Return None - Create a customized directory in the current folder'''
+
+    try:
+
+        # Create /ClientName
+        os.makedirs(cwd + '\\' + name)
+
+        #Create /ClientName/Constantes Vitales
+        os.makedirs(cwd + '\\' + name + '\\' + 'Constantes Vitales')
+        os.makedirs(cwd + '\\' + name + '\\' + 'Historial Clinico')
+        os.makedirs(cwd + '\\' + name + '\\' + 'Notas de las sesiones')
+
+    except TypeError:
+        print('You did not specify a client')
+
+
+for i in range(5):
+    crear_directorios(name + ' ' + str(i))
+    print('Creando directorio numero { }'.format(i))
+
 
